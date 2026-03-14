@@ -1,0 +1,119 @@
+{
+  "type": "object",
+  "properties": {
+    "requesting_school_id": {
+      "type": "string"
+    },
+    "requesting_school_name": {
+      "type": "string"
+    },
+    "partner_school_id": {
+      "type": "string"
+    },
+    "partner_school_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "share_notes": {
+      "type": "boolean",
+      "default": true
+    },
+    "share_assignments": {
+      "type": "boolean",
+      "default": true
+    },
+    "share_past_papers": {
+      "type": "boolean",
+      "default": true
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "requesting_school_id",
+    "partner_school_id"
+  ],
+  "name": "SchoolPartnership",
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "data.requesting_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "$or": [
+            {
+              "user_condition": {
+                "role": "teacher"
+              }
+            },
+            {
+              "user_condition": {
+                "role": "admin"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.requesting_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "data.partner_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.requesting_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "data.partner_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.requesting_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "data.partner_school_id": "{{user.data.school_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

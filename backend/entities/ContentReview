@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "properties": {
+    "content_id": {
+      "type": "string"
+    },
+    "reviewer_id": {
+      "type": "string"
+    },
+    "reviewer_name": {
+      "type": "string"
+    },
+    "reviewer_school": {
+      "type": "string"
+    },
+    "reviewer_role": {
+      "type": "string",
+      "enum": [
+        "teacher",
+        "student",
+        "school_admin"
+      ]
+    },
+    "rating": {
+      "type": "number"
+    },
+    "title": {
+      "type": "string"
+    },
+    "review_text": {
+      "type": "string"
+    },
+    "helpful_votes": {
+      "type": "number",
+      "default": 0
+    },
+    "is_verified_purchase": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "content_id",
+    "reviewer_id",
+    "rating"
+  ],
+  "name": "ContentReview",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

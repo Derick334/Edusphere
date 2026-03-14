@@ -1,0 +1,112 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "content_type": {
+      "type": "string",
+      "enum": [
+        "note",
+        "assignment",
+        "past_paper",
+        "resource_pack"
+      ]
+    },
+    "subject": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "junior_secondary",
+        "senior_secondary",
+        "post_secondary"
+      ]
+    },
+    "grade_form": {
+      "type": "string"
+    },
+    "original_content_id": {
+      "type": "string"
+    },
+    "school_id": {
+      "type": "string"
+    },
+    "school_name": {
+      "type": "string"
+    },
+    "school_code": {
+      "type": "string"
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string",
+      "format": "file_url"
+    },
+    "preview_text": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "is_free": {
+      "type": "boolean",
+      "default": false
+    },
+    "price": {
+      "type": "number",
+      "default": 0
+    },
+    "currency": {
+      "type": "string",
+      "default": "KES"
+    },
+    "average_rating": {
+      "type": "number",
+      "default": 0
+    },
+    "total_ratings": {
+      "type": "number",
+      "default": 0
+    },
+    "total_downloads": {
+      "type": "number",
+      "default": 0
+    },
+    "is_approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "subscribers_only",
+        "partner_schools"
+      ],
+      "default": "subscribers_only"
+    }
+  },
+  "required": [
+    "title",
+    "content_type",
+    "subject",
+    "level",
+    "school_id"
+  ],
+  "name": "SharedContent"
+}

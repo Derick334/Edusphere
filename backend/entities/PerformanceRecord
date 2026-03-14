@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "student_id": {
+      "type": "string"
+    },
+    "admission_number": {
+      "type": "string"
+    },
+    "school_id": {
+      "type": "string"
+    },
+    "school_code": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "term": {
+      "type": "string"
+    },
+    "year": {
+      "type": "number"
+    },
+    "score": {
+      "type": "number"
+    },
+    "grade": {
+      "type": "string"
+    },
+    "remarks": {
+      "type": "string"
+    },
+    "exam_type": {
+      "type": "string",
+      "enum": [
+        "cat",
+        "mid_term",
+        "end_term",
+        "mock",
+        "final"
+      ]
+    }
+  },
+  "required": [
+    "student_id",
+    "subject"
+  ],
+  "name": "PerformanceRecord",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

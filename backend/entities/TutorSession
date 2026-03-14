@@ -1,0 +1,145 @@
+{
+  "type": "object",
+  "properties": {
+    "tutor_id": {
+      "type": "string"
+    },
+    "tutor_name": {
+      "type": "string"
+    },
+    "student_id": {
+      "type": "string"
+    },
+    "student_name": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "session_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "session_time": {
+      "type": "string"
+    },
+    "duration_hours": {
+      "type": "number",
+      "default": 1
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "online",
+        "physical"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "meeting_link": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "payment_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "released"
+      ],
+      "default": "pending"
+    },
+    "student_rating": {
+      "type": "number"
+    },
+    "student_review": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "tutor_id",
+    "student_id",
+    "subject",
+    "session_date",
+    "amount"
+  ],
+  "name": "TutorSession",
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.tutor_id": "{{user.id}}"
+        },
+        {
+          "data.student_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.tutor_id": "{{user.id}}"
+        },
+        {
+          "data.student_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "data.tutor_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

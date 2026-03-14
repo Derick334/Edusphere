@@ -1,0 +1,142 @@
+{
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "admission_number": {
+      "type": "string"
+    },
+    "school_id": {
+      "type": "string"
+    },
+    "school_code": {
+      "type": "string"
+    },
+    "full_name": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "junior_secondary",
+        "senior_secondary",
+        "post_secondary"
+      ]
+    },
+    "grade_class": {
+      "type": "string"
+    },
+    "parent_phone": {
+      "type": "string"
+    },
+    "parent_email": {
+      "type": "string",
+      "format": "email"
+    },
+    "profile_photo": {
+      "type": "string",
+      "format": "file_url"
+    },
+    "subscription_type": {
+      "type": "string",
+      "enum": [
+        "free",
+        "premium",
+        "school_based"
+      ],
+      "default": "free"
+    },
+    "subscription_expires": {
+      "type": "string",
+      "format": "date"
+    },
+    "fee_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "fee_arrears": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "user_id",
+    "admission_number",
+    "full_name",
+    "level"
+  ],
+  "name": "Student",
+  "rls": {
+    "create": {
+      "data.user_id": "{{user.id}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.school_id": "{{user.data.school_id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "teacher"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.school_id": "{{user.data.school_id}}",
+          "user_condition": {
+            "role": {
+              "$in": [
+                "teacher",
+                "admin"
+              ]
+            }
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.user_id": "{{user.id}}"
+        },
+        {
+          "data.school_id": "{{user.data.school_id}}",
+          "user_condition": {
+            "role": {
+              "$in": [
+                "teacher",
+                "admin"
+              ]
+            }
+          }
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

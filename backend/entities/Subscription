@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "user_type": {
+      "type": "string",
+      "enum": [
+        "student",
+        "school"
+      ]
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "basic",
+        "premium"
+      ]
+    },
+    "amount_paid": {
+      "type": "number"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "transaction_id": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "user_id",
+    "user_type",
+    "plan"
+  ],
+  "name": "Subscription"
+}

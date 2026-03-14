@@ -1,0 +1,109 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "school_code": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string",
+      "enum": [
+        "primary",
+        "junior_secondary",
+        "senior_secondary",
+        "post_secondary"
+      ]
+    },
+    "county": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "logo": {
+      "type": "string",
+      "format": "file_url"
+    },
+    "certificate": {
+      "type": "string",
+      "format": "file_url"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "subscription_plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "basic",
+        "premium"
+      ],
+      "default": "free"
+    },
+    "subscription_expires": {
+      "type": "string",
+      "format": "date"
+    },
+    "admin_user_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "school_code",
+    "level"
+  ],
+  "name": "School",
+  "rls": {
+    "create": {
+      "data.admin_user_id": "{{user.id}}"
+    },
+    "read": {},
+    "update": {
+      "$or": [
+        {
+          "data.admin_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.admin_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "write": {
+      "$or": [
+        {
+          "data.admin_user_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "type": "object",
+  "properties": {
+    "content_id": {
+      "type": "string"
+    },
+    "accessor_type": {
+      "type": "string",
+      "enum": [
+        "school",
+        "student"
+      ]
+    },
+    "accessor_id": {
+      "type": "string"
+    },
+    "school_id": {
+      "type": "string"
+    },
+    "access_granted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "access_type": {
+      "type": "string",
+      "enum": [
+        "free",
+        "purchased",
+        "subscription"
+      ]
+    },
+    "amount_paid": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "content_id",
+    "accessor_type",
+    "accessor_id"
+  ],
+  "name": "ContentAccess",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}",
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

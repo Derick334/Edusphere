@@ -1,0 +1,55 @@
+{
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "question": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string"
+    },
+    "ai_provider": {
+      "type": "string",
+      "enum": [
+        "chatgpt",
+        "gemini",
+        "perplexity"
+      ],
+      "default": "chatgpt"
+    },
+    "response": {
+      "type": "string"
+    },
+    "voice_url": {
+      "type": "string"
+    },
+    "has_voice": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "user_id",
+    "question"
+  ],
+  "name": "AIConversation",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

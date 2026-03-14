@@ -1,0 +1,175 @@
+{
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    },
+    "level": {
+      "type": "string"
+    },
+    "grade_class": {
+      "type": "string"
+    },
+    "school_id": {
+      "type": "string"
+    },
+    "teacher_id": {
+      "type": "string"
+    },
+    "teacher_name": {
+      "type": "string"
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "attachment_file": {
+      "type": "string",
+      "format": "file_url"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "total_marks": {
+      "type": "number",
+      "default": 100
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    },
+    "grading_rubric": {
+      "type": "object",
+      "properties": {
+        "criteria": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "essay_weightings": {
+          "type": "object",
+          "properties": {
+            "content_accuracy": {
+              "type": "number",
+              "default": 40
+            },
+            "structure_organization": {
+              "type": "number",
+              "default": 20
+            },
+            "coherence_flow": {
+              "type": "number",
+              "default": 15
+            },
+            "argumentation": {
+              "type": "number",
+              "default": 15
+            },
+            "grammar_spelling": {
+              "type": "number",
+              "default": 10
+            }
+          }
+        }
+      }
+    },
+    "auto_approval_threshold": {
+      "type": "number",
+      "default": 80
+    },
+    "flag_review_threshold": {
+      "type": "number",
+      "default": 50
+    },
+    "plagiarism_check_enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "plagiarism_threshold": {
+      "type": "number",
+      "default": 20
+    },
+    "assignment_type": {
+      "type": "string",
+      "enum": [
+        "mcq",
+        "short_answer",
+        "essay",
+        "mixed"
+      ],
+      "default": "mixed"
+    }
+  },
+  "required": [
+    "title",
+    "subject",
+    "level",
+    "school_id",
+    "teacher_id",
+    "due_date"
+  ],
+  "name": "Assignment",
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.is_published": true
+        },
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

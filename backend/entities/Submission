@@ -1,0 +1,168 @@
+{
+  "type": "object",
+  "properties": {
+    "assignment_id": {
+      "type": "string"
+    },
+    "student_id": {
+      "type": "string"
+    },
+    "student_name": {
+      "type": "string"
+    },
+    "answers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "attachment_file": {
+      "type": "string",
+      "format": "file_url"
+    },
+    "submitted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ai_score": {
+      "type": "number"
+    },
+    "ai_feedback": {
+      "type": "string"
+    },
+    "ai_rubric_scores": {
+      "type": "object",
+      "properties": {
+        "content_accuracy": {
+          "type": "number"
+        },
+        "structure_organization": {
+          "type": "number"
+        },
+        "coherence_flow": {
+          "type": "number"
+        },
+        "argumentation": {
+          "type": "number"
+        },
+        "grammar_spelling": {
+          "type": "number"
+        },
+        "criteria_scores": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "plagiarism_result": {
+      "type": "object",
+      "properties": {
+        "score": {
+          "type": "number"
+        },
+        "flagged": {
+          "type": "boolean"
+        },
+        "similar_sources": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "highlighted_sections": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "teacher_score": {
+      "type": "number"
+    },
+    "teacher_feedback": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "submitted",
+        "ai_graded",
+        "auto_approved",
+        "flagged_review",
+        "teacher_reviewed"
+      ],
+      "default": "pending"
+    },
+    "is_late": {
+      "type": "boolean",
+      "default": false
+    },
+    "auto_approved": {
+      "type": "boolean",
+      "default": false
+    },
+    "needs_review_reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "assignment_id",
+    "student_id"
+  ],
+  "name": "Submission",
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.assignment_id": {
+            "$in": "{{user.data.teacher_assignment_ids}}"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.assignment_id": {
+            "$in": "{{user.data.teacher_assignment_ids}}"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "created_by": "{{user.email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}
